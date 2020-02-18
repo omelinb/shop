@@ -1,5 +1,6 @@
 class Cart < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  after_create :set_cleaner
 
   def add_product(product_params)
     current_item = line_items.find_by(product_id: product_params[:product_id])
@@ -26,4 +27,10 @@ class Cart < ApplicationRecord
 
     current_item.destroy if current_item&.quantity == 0
   end
+
+  private
+
+    def set_cleaner
+      CleanerWorker.perform_in(5.minutes, id)
+    end
 end
