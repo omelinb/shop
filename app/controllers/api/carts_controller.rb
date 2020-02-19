@@ -1,16 +1,15 @@
 class Api::CartsController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: %i[add_product show remove_product]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_error
+  rescue_from ActionController::ParameterMissing, with: :params_error
 
   # POST /api/cart
   def add_product
-    @line_item = @cart.add_product(product_params)
+    @product = Product.find(product_params[:product_id])
+    @cart.add_product(product_params)
 
-    if @line_item.save
-      head 200
-    else
-      head 400
-    end
+    head 200
   end
 
   # GET /api/cart
@@ -20,7 +19,8 @@ class Api::CartsController < ApplicationController
 
   # DELETE /api/cart/{product_id}
   def remove_product
-    @cart.remove_product(params[:product_id])
+    @product = Product.find(params[:product_id])
+    @cart.remove_product(@product)
 
     head 200
   end
@@ -28,6 +28,8 @@ class Api::CartsController < ApplicationController
   private
 
     def product_params
-      params.require(:product).permit(:product_id, :quantity)
+      params.require(:product_id)
+      params.require(:quantity)
+      params.permit(:product_id, :quantity)
     end
 end

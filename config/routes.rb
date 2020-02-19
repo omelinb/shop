@@ -5,4 +5,6 @@ Rails.application.routes.draw do
     get    'cart',             to: 'carts#show'
     delete 'cart/:product_id', to: 'carts#remove_product'
   end
+
+  match '*path', to: 'application#routing_error', via: :all
 end
