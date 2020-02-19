@@ -7,7 +7,7 @@ class Api::CartsController < ApplicationController
     @line_item = @cart.add_product(product_params)
 
     if @line_item.save
-      head 201
+      head 200
     else
       head 400
     end
@@ -15,14 +15,14 @@ class Api::CartsController < ApplicationController
 
   # GET /api/cart
   def show
-    render json: CartSerializer.new(@cart).serializible_hash
+    render json: CartSerializer.new(@cart).serializible_hash, status: 200
   end
 
   # DELETE /api/cart/{product_id}
   def remove_product
     @cart.remove_product(params[:product_id])
 
-    head 204
+    head 200
   end
 
   private

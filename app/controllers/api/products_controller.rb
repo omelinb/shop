@@ -4,6 +4,6 @@ class Api::ProductsController < ApplicationController
   def index
     @products = Product.all
 
-    render json: ProductSerializer.new(@products).serializible_hash
+    render json: ProductSerializer.new(@products).serializible_hash, status: 200
   end
 end
