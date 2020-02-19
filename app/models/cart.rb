@@ -28,6 +28,14 @@ class Cart < ApplicationRecord
     current_item.destroy if current_item&.quantity == 0
   end
 
+  def total_sum
+    line_items.sum { |line_item| line_item.total_price }
+  end
+
+  def products_count
+    line_items.sum { |line_item| line_item.quantity }
+  end
+
   private
 
     def set_cleaner

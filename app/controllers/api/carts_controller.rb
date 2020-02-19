@@ -15,7 +15,7 @@ class Api::CartsController < ApplicationController
 
   # GET /api/cart
   def show
-    render json: @cart
+    render json: CartSerializer.new(@cart).serializible_hash
   end
 
   # DELETE /api/cart/{product_id}
