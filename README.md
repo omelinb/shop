@@ -1,24 +1,54 @@
-# README
+Shop API
+-----------
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple API for getting, adding or removing products to cart.
 
-Things you may want to cover:
 
-* Ruby version
+System Dependencies
+-------------------
 
-* System dependencies
+- Ruby 2.6.5 (install with [rbenv](https://github.com/sstephenson/rbenv))
+- Rails 6.0.2.1
+- Redis
+- PostgreSQL
 
-* Configuration
+Project Install
+-------------------
+```shell
+git clone git@github.com:omelinb/shop.git
+```
 
-* Database creation
+Database creation
+-----------------
 
-* Database initialization
+Add data about your pg user in /config/database.yml:  
+&nbsp;&nbsp;username: pg_user 
 
-* How to run the test suite
+Create environment variable with database_password:
+```shell
+echo 'export SHOP_DATABASE_PASSWORD="PostgreSQL_Role_Password"' >> ~/.bashrc
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+- rails db:create  
+- rails db:migrate  
+- rails db:seed  
 
-* Deployment instructions
 
-* ...
+API
+---
+
+- /api/products&nbsp; **GET** Get lisf of products
+- /api/cart &nbsp; **GET** Get cart info
+- /api/cart/{product_id} &nbsp; **DELETE** Remove product from cart
+- /api/cart &nbsp; **POST** Add product to cart
+&nbsp;&nbsp;params: {product_id, quantity}
+
+Examples
+--------
+
+```shell
+curl http://localhost:3000/api/products
+curl http://localhost:3000/api/cart
+curl -d '{ "product_id": 2, "quantity": 3 }' -H "Content-Type: application/json" -X POST http://localhost:3000/api/cart
+curl http://localhost:3000/api/cart/2
+```
