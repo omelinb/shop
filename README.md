@@ -16,6 +16,7 @@ Project Install
 -------------------
 ```shell
 git clone git@github.com:omelinb/shop.git
+bundle install
 ```
 
 Database creation
@@ -28,11 +29,12 @@ Create environment variable with database_password:
 ```shell
 echo 'export SHOP_DATABASE_PASSWORD="PostgreSQL_Role_Password"' >> ~/.bashrc
 ```
-
-- rails db:create  
-- rails db:migrate  
-- rails db:seed  
-
+Create and seed database
+```shell
+rails db:create  
+rails db:migrate  
+rails db:seed  
+```
 
 API
 ---
@@ -40,8 +42,8 @@ API
 - /api/products&nbsp; **GET** Get lisf of products
 - /api/cart &nbsp; **GET** Get cart info
 - /api/cart/{product_id} &nbsp; **DELETE** Remove product from cart
-- /api/cart &nbsp; **POST** Add product to cart
-&nbsp;&nbsp;params: {product_id, quantity}
+- /api/cart &nbsp; **POST** Add product to cart  
+&nbsp;&nbsp;params: {product_id: integer, quantity: integer}
 
 Examples
 --------
